@@ -1,0 +1,12 @@
+.env
+.env.*
+!.env.example
+data/
+.web-cache/
+.venv/
+__pycache__/
+*.py[cod]
+*.zip
+*.npz
+questions.csv
+submission.csv

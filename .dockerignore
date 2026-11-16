@@ -1,0 +1,12 @@
+**
+!Dockerfile
+!requirements-web.txt
+!web_app.py
+!solution.py
+!psb_engine.py
+!psb_bundles.py
+!psb_citations.py
+!web/
+!web/index.html
+!web/style.css
+!web/chat.js

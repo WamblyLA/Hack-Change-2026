@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+  <title>Правовой помощник · Hack&amp;Change 2026</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script defer src="/static/chat.js"></script>
+</head>
+<body>
+  <header class="top">
+    <div class="top-inner">
+      <div>
+        <p class="eyebrow">HACK&amp;CHANGE 2026 <span> / </span> КЕЙС ПСБ</p>
+        <h1>Правовой помощник</h1>
+      </div>
+      <button id="reset" type="button" disabled>Новый диалог</button>
+    </div>
+  </header>
+  <main>
+    <section class="conversation" aria-label="Диалог">
+      <div id="intro">
+        <h2>Задайте вопрос по документам</h2>
+        <p>Укажите название документа, номер договора или интересующий период. Ответы опираются на базу знаний; подтверждения можно раскрыть под ответом.</p>
+      </div>
+      <div id="messages" role="log" aria-live="polite" aria-relevant="additions"></div>
+    </section>
+    <div class="composer">
+      <p id="status" role="status">Проверяем подключение…</p>
+      <p id="error" role="alert" hidden></p>
+      <form id="chat">
+        <label for="question">Ваш вопрос</label>
+        <div class="input-row">
+          <textarea id="question" name="question" rows="2" maxlength="2000" placeholder="Например: какие сроки предусмотрены договором?" required></textarea>
+          <button id="send" class="primary" type="submit">Отправить</button>
+        </div>
+      </form>
+    </div>
+  </main>
+</body>
+</html>
