@@ -18,14 +18,14 @@ try {
   if (Array.isArray(saved.turns)) turns = saved.turns;
   if (typeof saved.draft === "string") input.value = saved.draft;
 } catch {
-  // The dialog still works when browser storage is unavailable.
+  // 
 }
 
 function persist() {
   try {
     sessionStorage.setItem(storageKey, JSON.stringify({ turns, draft: input.value }));
   } catch {
-    try { sessionStorage.removeItem(storageKey); } catch { /* Storage is unavailable. */ }
+    try { sessionStorage.removeItem(storageKey); } catch { /**/ }
   }
 }
 
@@ -48,7 +48,7 @@ function addAnswer(turn) {
   const answer = addMessage("assistant", turn.answer);
   const panel = node("div", undefined, "sources");
   if (!turn.sources.length) {
-    panel.append(node("p", "В ответе нет подтверждённых ссылок на фрагменты базы.", "no-sources"));
+    panel.append(node("p", "В ответе нет подтверждённых ссылок на фрагменты базы", "no-sources"));
   } else {
     panel.append(node("h4", "Источники"));
     for (const source of turn.sources) {
@@ -77,7 +77,7 @@ function update() {
   send.disabled = busy;
   reset.disabled = busy || (!turns.length && !input.value.trim());
   input.readOnly = busy;
-  statusLine.textContent = busy ? "Ищем источники и ждём ответ модели…" : readiness;
+  statusLine.textContent = busy ? "Ищем источники и ждём ответ модели..." : readiness;
   form.setAttribute("aria-busy", String(busy));
 }
 
@@ -91,10 +91,10 @@ async function checkStatus() {
     const response = await fetch("/api/status", { cache: "no-store" });
     if (!response.ok) throw new Error();
     const state = await response.json();
-    readiness = !state.knowledge_base ? "База знаний не загружена." :
-      !state.proxy_configured ? "База загружена · прокси не настроен" : "База загружена · прокси настроен";
+    readiness = !state.knowledge_base ? "База знаний не загружена" :
+      !state.proxy_configured ? "База загружена, но прокси не настроен" : "База загружена и прокси настроен";
   } catch {
-    readiness = "Нет связи с сервером.";
+    readiness = "Нет связи с сервером";
   }
   update();
 }
@@ -117,9 +117,9 @@ form.addEventListener("submit", async (event) => {
     const data = await response.json().catch(() => null);
     if (!response.ok) {
       throw new Error(typeof data?.detail === "string" ? data.detail :
-        response.status === 422 ? "Введите вопрос длиной от 1 до 2000 символов." : "Сервер не смог обработать запрос.");
+        response.status === 422 ? "Введите вопрос" : "Сервер не смог обработать запрос");
     }
-    if (typeof data?.answer !== "string" || !Array.isArray(data.sources)) throw new Error("Сервер вернул некорректный ответ.");
+    if (typeof data?.answer !== "string" || !Array.isArray(data.sources)) throw new Error("Сервер вернул некорректный ответ");
     const turn = { question, answer: data.answer, sources: data.sources };
     addAnswer(turn).scrollIntoView({ block: "start" });
     turns.push(turn);
@@ -127,7 +127,7 @@ form.addEventListener("submit", async (event) => {
   } catch (error) {
     pending.remove();
     intro.hidden = Boolean(turns.length);
-    showError(error instanceof TypeError ? "Не удалось связаться с сервером. Попробуйте отправить вопрос ещё раз." : error.message);
+    showError(error instanceof TypeError ? "Не удалось связаться с сервером. Попробуйте отправить еще раз" : error.message);
   } finally {
     busy = false;
     persist();
